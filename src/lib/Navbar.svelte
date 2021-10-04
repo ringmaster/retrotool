@@ -2,7 +2,7 @@
     <div class="navbar-brand">
       <a class="navbar-item" href="https://bulma.io">
         <!-- svelte-ignore a11y-missing-attribute -->
-        <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+        <img src="/retrotool.png" width="112" height="28">
       </a>
   
       <!-- svelte-ignore a11y-missing-attribute -->

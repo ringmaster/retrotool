@@ -1,35 +1,71 @@
 <script>
   import CodeMirror from "./CodeMirror.svelte";
-//import HyperMd from "./HyperMD.svelte";
-
-    export let content = ""
-    let textarea
-
-    function setHeight(e){
-      e.target.style.removeProperty('height');
-      e.target.style.height = (this.scrollHeight+2) + 'px';
+  import {onMount} from "svelte";
+  import { tick } from 'svelte';
+  //import HyperMd from "./HyperMD.svelte";
+  
+  export let content = ""
+  let editing = false
+  let textarea, staticcard
+  
+  onMount(() => {
+    setHeight()
+  })
+  
+  function setHeight(){
+    if(textarea){
+    textarea.style.removeProperty('height');
+    textarea.style.height = (textarea.scrollHeight+2) + 'px';
     }
+    if(staticcard){
+    staticcard.style.removeProperty('height');
+    staticcard.style.height = (staticcard.scrollHeight+2) + 'px';
+    }
+  }
+
+  async function blurCard(){
+    editing = false
+    await tick();
+    setHeight()
+  }
+  async function focusCard(){
+    editing = true
+    await tick();
+    setHeight()
+    textarea.focus()
+  }
 </script>
 
 <style>
   .card {
     margin-bottom: 1rem;
+    background-color: #ffffdd;
   }
   .textarea {
     overflow-y: hidden;
     border: none;
-    background: white;
+    background: transparent;
     box-shadow: none;
     resize: none;
+    min-height: 2rem;
+  }
+  .card-content {
+    padding: 0px;
   }
 </style>
 
 <div class="card">
   <div class="card-content">
     <div class="content is-size-7">
-      <textarea class="textarea" bind:value="{content}" bind:this="{textarea}" on:keyup="{setHeight}" on:focus="{setHeight}" on:click="{setHeight}" />
-      <br />
-      <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+      {#if editing}
+      <div>
+        <textarea class="textarea" bind:value="{content}" bind:this="{textarea}" on:keyup="{setHeight}" on:focus="{setHeight}" on:click="{setHeight}" on:blur="{blurCard}" />
+      </div>
+      {:else}
+      <div class="textarea" on:click="{focusCard}" bind:this="{staticcard}">
+        {content}
+      </div>        
+      {/if}
     </div>
   </div>
 </div>
