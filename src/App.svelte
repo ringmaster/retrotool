@@ -3,6 +3,12 @@
   import Steps from "./lib/Steps.svelte";
   import Board from "./lib/Board.svelte";
 </script>
+<svelte:head>
+	<title>Retrotool</title>
+  <link rel="icon" 
+      type="image/png" 
+      href="/retrotool_favicon.png">
+</svelte:head>
 
 <Navbar />
 
