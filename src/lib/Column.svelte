@@ -13,13 +13,13 @@
   export let items = []
   export let name = "Unnamed"
   
-  function handleSort(e) {
-    items = e.detail.items;
+  function handleSort(detail) {
+    items = detail.items;
   }
 </script>
 <section class="column">
   <h2 class="subtitle is-5">{name}</h2>
-  <div class="dndzone" use:dndzone={{items, flipDurationMs}} on:consider={handleSort} on:finalize={handleSort}>
+  <div class="dndzone" use:dndzone={{items, flipDurationMs}} on:consider={(e)=>handleSort(e.detail)} on:finalize={(e)=>handleSort(e.detail)}>
     {#each items as item(item.id)}
     <div animate:flip={{duration:flipDurationMs}}>
       <Card bind:content="{item.content}"></Card>
