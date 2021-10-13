@@ -4,7 +4,7 @@
   import { tick } from 'svelte';
   //import HyperMd from "./HyperMD.svelte";
   
-  export let content = ""
+  export let item = {}
   let editing = false
   let textarea, staticcard
   
@@ -14,15 +14,15 @@
   
   function setHeight(){
     if(textarea){
-    textarea.style.removeProperty('height');
-    textarea.style.height = (textarea.scrollHeight+2) + 'px';
+      textarea.style.removeProperty('height');
+      textarea.style.height = (textarea.scrollHeight+2) + 'px';
     }
     if(staticcard){
-    staticcard.style.removeProperty('height');
-    staticcard.style.height = (staticcard.scrollHeight+2) + 'px';
+      staticcard.style.removeProperty('height');
+      staticcard.style.height = (staticcard.scrollHeight+2) + 'px';
     }
   }
-
+  
   async function blurCard(){
     editing = false
     await tick();
@@ -34,10 +34,11 @@
     setHeight()
     textarea.focus()
   }
+
 </script>
 
 <style>
-  .card {
+  .cardx {
     margin-bottom: 1rem;
     background-color: #ffffdd;
   }
@@ -54,16 +55,16 @@
   }
 </style>
 
-<div class="card">
+<div class="cardx">
   <div class="card-content">
     <div class="content is-size-7">
       {#if editing}
       <div>
-        <textarea class="textarea" bind:value="{content}" bind:this="{textarea}" on:keyup="{setHeight}" on:focus="{setHeight}" on:click="{setHeight}" on:blur="{blurCard}" />
+        <textarea class="textarea" bind:value="{item.content}" bind:this="{textarea}" on:keyup="{setHeight}" on:focus="{setHeight}" on:click="{setHeight}" on:blur="{blurCard}" />
       </div>
       {:else}
       <div class="textarea" on:click="{focusCard}" bind:this="{staticcard}">
-        {content}
+        {item.content}
       </div>        
       {/if}
     </div>

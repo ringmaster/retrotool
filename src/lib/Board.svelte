@@ -12,7 +12,11 @@
 <section class="section container">
   <div class="columns">
     {#each columns as {name, items} (name)}
-    <Column items="{items}" name="{name}"></Column>
+    <Column bind:items="{items}" name="{name}"></Column>
     {/each}
   </div>
+</section>
+
+<section class="section container">
+  <textarea class="textarea">{JSON.stringify(columns, null, 2)}</textarea>
 </section>
